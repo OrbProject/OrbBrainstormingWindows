@@ -2,7 +2,7 @@
 #define AppPublisher "Orb Project Management, SAS"
 #define MyAppURL "https://orbprojectmanagement.com"
 #define AppExeName "OrbProject.exe"
-#define AppSourceDir "{src}"  // Dossier racine du repo contenant le build Unity
+#define AppSourceDir "{src/OrbProject}"  // Dossier racine du repo contenant le build Unity
 
 [Setup]
 AppId={{369F2C6A-D016-4DA1-B76A-D73FF049BA1C}}
