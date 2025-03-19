@@ -7,11 +7,19 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019  # Plus stable que windows-2022 pour le moment
+    runs-on: windows-lastest  # Plus stable que windows-2019 pour le moment
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Force update GitHub Actions
+        run: |
+          git config --global --add safe.directory /__w
+          gh auth setup-git
+          gh extension install actions/runner
+          gh actions-runner update
+        shell: bash
 
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
@@ -25,7 +33,7 @@ jobs:
         shell: cmd
 
       - name: Upload Installer as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2
         with:
           name: Installer
           path: Output/*.exe
