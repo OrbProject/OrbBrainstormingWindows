@@ -1,0 +1,35 @@
+name: Build and Release Installer
+
+on:
+  push:
+    tags:
+      - 'v*'  # Déclenche la génération lors d'un tag versionné (ex: v1.0.0)
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Inno Setup
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2
+        with:
+          version: 6.2.0  # Version d'Inno Setup
+
+      - name: Compile Setup with Inno Setup
+        run: iscc setup.iss
+
+      - name: Upload Installer as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Installer
+          path: Output/*.exe
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Output/*.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
