@@ -25,7 +25,7 @@ jobs:
         shell: cmd
 
       - name: Upload Installer as Artifact
-        uses: actions/upload-artifact@v3.1.2  # Forcer une version stable
+        uses: actions/upload-artifact@v3
         with:
           name: Installer
           path: Output/*.exe
