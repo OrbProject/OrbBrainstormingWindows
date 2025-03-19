@@ -36,7 +36,8 @@ jobs:
         shell: cmd
 
       - name: Compile Setup with Inno Setup
-        run: "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
+        run: |
+          "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
         shell: cmd
 
       - name: Upload Installer as Artifact
