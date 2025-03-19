@@ -3,7 +3,7 @@ name: Build and Release Installer
 on:
   push:
     tags:
-      - 'v*'  # Déclenche la génération lors d'un tag versionné (ex: v1.0.0)
+      - 'v*'  # Déclenche l'action lorsqu'un tag versionné est poussé (ex: v1.0.0)
 
 jobs:
   build:
@@ -13,13 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Extract version from tag
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
       - name: Setup Inno Setup
         uses: Minionguyjpro/Inno-Setup-Action@v1.2
         with:
           version: 6.2.0  # Version d'Inno Setup
 
       - name: Compile Setup with Inno Setup
-        run: iscc setup.iss
+        run: iscc /DAppVersion=${{ env.VERSION }} setup.iss
 
       - name: Upload Installer as Artifact
         uses: actions/upload-artifact@v3
