@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2022  # Plus stable que windows-2019 pour le moment
+    runs-on: windows-latest  # Plus stable que windows-2019 pour le moment
 
     steps:
       - name: Checkout repository
@@ -33,7 +33,7 @@ jobs:
         shell: cmd
 
       - name: Upload Installer as Artifact
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v3
         with:
           name: Installer
           path: Output/*.exe
