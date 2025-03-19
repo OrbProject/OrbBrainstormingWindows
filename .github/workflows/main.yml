@@ -13,14 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Force update GitHub Actions
-        run: |
-          git config --global --add safe.directory /__w
-          gh auth setup-git
-          gh extension install actions/runner
-          gh actions-runner update
-        shell: bash
-
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
         shell: bash
