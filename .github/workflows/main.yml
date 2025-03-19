@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019  # Plus stable que windows-2022 pour le moment
 
     steps:
       - name: Checkout repository
@@ -15,6 +15,15 @@ jobs:
 
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Update GitHub Actions Runner
+        run: |
+          git config --global --add safe.directory /__w
+          gh auth setup-git
+          gh extension install actions/runner
+          gh actions-runner update
+        shell: bash
 
       - name: Install Inno Setup
         run: |
@@ -28,9 +37,10 @@ jobs:
 
       - name: Compile Setup with Inno Setup
         run: iscc /DAppVersion=${{ env.VERSION }} setup.iss
+        shell: cmd
 
       - name: Upload Installer as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.2  # Forcer une version stable
         with:
           name: Installer
           path: Output/*.exe
