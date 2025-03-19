@@ -16,10 +16,15 @@ jobs:
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
-      - name: Setup Inno Setup
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2
-        with:
-          version: 6.2.0  # Version d'Inno Setup
+      - name: Install Inno Setup
+        run: |
+          curl -L -o is.exe "https://jrsoftware.org/download.php/is.exe"
+          start /wait is.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
+        shell: cmd
+
+      - name: Verify Inno Setup installation
+        run: iscc /?
+        shell: cmd
 
       - name: Compile Setup with Inno Setup
         run: iscc /DAppVersion=${{ env.VERSION }} setup.iss
