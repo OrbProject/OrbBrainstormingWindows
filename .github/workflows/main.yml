@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-lastest  # Plus stable que windows-2019 pour le moment
+    runs-on: windows-2022  # Plus stable que windows-2019 pour le moment
 
     steps:
       - name: Checkout repository
