@@ -3,7 +3,7 @@
 #define MyAppURL "https://orbprojectmanagement.com"
 #define AppExeName "OrbProject.exe"
 #define AppSourceDir "{src/OrbProject}" 
-#define AppVersion 
+
 
 [Setup]
 AppId={{369F2C6A-D016-4DA1-B76A-D73FF049BA1C}}
