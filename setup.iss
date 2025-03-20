@@ -2,7 +2,7 @@
 #define AppPublisher "Orb Project Management, SAS"
 #define MyAppURL "https://orbprojectmanagement.com"
 #define AppExeName "OrbProject.exe"
-#define AppSourceDir "{src/OrbProject}"  // Dossier racine du repo contenant le build Unity
+#define AppSourceDir "{src/OrbProject}" 
 #define AppVersion 
 
 [Setup]
