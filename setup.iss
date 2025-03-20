@@ -2,7 +2,7 @@
 #define AppPublisher "Orb Project Management, SAS"
 #define MyAppURL "https://orbprojectmanagement.com"
 #define AppExeName "OrbProject.exe"
-#define AppSourceDir "{#SourcePath}\OrbProject"
+#define AppSourceDir "\OrbProject"
 
 
 [Setup]
