@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'  # Déclenche l'action lorsqu'un tag versionné est poussé (ex: v1.0.0)
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest  # Plus stable que windows-2019 pour le moment
@@ -26,7 +29,7 @@ jobs:
       - name: Verify Inno Setup installation
         run: |
           where iscc
-          if not exist "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" exit 1
+          if not exist "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" exit 1
         shell: cmd
 
       - name: Check if setup.iss exists and readable
@@ -37,7 +40,7 @@ jobs:
 
       - name: Compile Setup with Inno Setup
         run: |
-          "C:\\Program Files (x86)\\Inno Setup 6\\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
         shell: cmd
 
       - name: Upload Installer as Artifact
