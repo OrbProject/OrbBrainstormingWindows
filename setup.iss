@@ -19,7 +19,7 @@ SolidCompression=yes
 WizardStyle=modern
 
 [Files]
-Source: "{#AppSourceDir}\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
+Source: "OrbProject\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{app}\{#AppExeName}"
