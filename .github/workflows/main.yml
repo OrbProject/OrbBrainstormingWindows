@@ -10,14 +10,33 @@ permissions:
 
 jobs:
   build:
-    runs-on: windows-latest  # Plus stable que windows-2019 pour le moment
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Pull LFS files
+        run: git lfs pull
+        shell: bash
 
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Generate version.txt
+        run: echo $VERSION > version.txt
+        shell: bash
+
+      - name: Commit version.txt
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add version.txt
+          git commit -m "Mise à jour automatique de version.txt"
+          git push
         shell: bash
 
       - name: Install Inno Setup
@@ -55,3 +74,10 @@ jobs:
           files: Output/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Ensure all Unity files are copied
+        run: |
+          echo "Checking files in build directory..."
+          dir Build
+          dir Build/OrbProject_Data
+        shell: cmd
