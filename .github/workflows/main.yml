@@ -36,7 +36,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add version.txt
           git commit -m "Mise à jour automatique de version.txt"
-          git push
+          git push origin HEAD:main
         shell: bash
 
       - name: Install Inno Setup
@@ -74,10 +74,3 @@ jobs:
           files: Output/*.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ensure all Unity files are copied
-        run: |
-          echo "Checking files in build directory..."
-          dir Build
-          dir Build/OrbProject_Data
-        shell: cmd
