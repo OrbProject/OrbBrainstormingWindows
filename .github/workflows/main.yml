@@ -15,12 +15,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - name: Pull LFS files
-        run: git lfs pull
-        shell: bash
 
       - name: Extract version from tag
         run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
@@ -37,6 +31,24 @@ jobs:
           git add version.txt
           git commit -m "Mise à jour automatique de version.txt"
           git push origin HEAD:main
+        shell: bash
+
+      - name: Download Unity Build
+        run: |
+          curl -L -o build.zip https://builds.orbprojectmanagement.com/Windows/OrbProject_Build.zip
+        shell: bash
+
+      - name: Extract Unity Build
+        run: |
+          rm -rf OrbProject
+          mkdir OrbProject
+          unzip build.zip -d OrbProject
+        shell: bash
+
+      - name: Download Installer Images
+        run: |
+          curl -L -o cover.bmp https://builds.orbprojectmanagement.com/Images/cover.bmp
+          curl -L -o Logo.bmp https://builds.orbprojectmanagement.com/Images/Logo.bmp
         shell: bash
 
       - name: Install Inno Setup
