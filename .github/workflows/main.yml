@@ -74,6 +74,16 @@ jobs:
           "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
         shell: cmd
 
+      - name: Sign installer
+        run: |
+          signtool sign /fd SHA256 /f WSATestCertificate.pfx /tr http://timestamp.digicert.com /td SHA256 Output\*.exe
+        shell: cmd
+
+      - name: Verify Signature
+        run: |
+          signtool verify /pa Output\*.exe
+        shell: cmd
+
       - name: Upload Installer as Artifact
         uses: actions/upload-artifact@v4
         with:
