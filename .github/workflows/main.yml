@@ -48,7 +48,8 @@ jobs:
       - name: Download Installer Images
         run: |
           curl -L -o cover.bmp https://builds.orbprojectmanagement.com/Images/cover.bmp
-          curl -L -o Logo.bmp https://builds.orbprojectmanagement.com/Images/Logo.bmp
+          curl -L -o LogoDL.ico https://builds.orbprojectmanagement.com/Images/LogoDL.ico
+          curl -L -o logo.ico https://builds.orbprojectmanagement.com/Images/logo.ico
         shell: bash
 
       - name: Install Inno Setup
