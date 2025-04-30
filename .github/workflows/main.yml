@@ -48,7 +48,7 @@ jobs:
       - name: Download Installer Images
         run: |
           curl -L -o cover.bmp https://builds.orbprojectmanagement.com/Images/cover.bmp
-          curl -L -o LogoDL.ico https://builds.orbprojectmanagement.com/Images/LogoDL.ico
+          curl -L -o LogoDL.bmp https://builds.orbprojectmanagement.com/Images/LogoDL.bmp
           curl -L -o logo.ico https://builds.orbprojectmanagement.com/Images/logo.ico
         shell: bash
 
