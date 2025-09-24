@@ -3,7 +3,7 @@ name: Build and Release Installer
 on:
   push:
     tags:
-      - 'v*'  # Déclenche l'action lorsqu'un tag versionné est poussé (ex: v1.0.0)
+      - 'v*'
 
 permissions:
   contents: write
@@ -29,13 +29,12 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add version.txt
-          git commit -m "Mise à jour automatique de version.txt"
+          git commit -m "Mise à jour automatique de version.txt" || echo "no changes"
           git push origin HEAD:main
         shell: bash
 
       - name: Download Unity Build
-        run: |
-          curl -L -o build.zip https://builds.orbprojectmanagement.com/Windows/OrbProject_Build.zip
+        run: curl -L -o build.zip https://builds.orbprojectmanagement.com/Windows/OrbProject_Build.zip
         shell: bash
 
       - name: Extract Unity Build
@@ -52,28 +51,16 @@ jobs:
           curl -L -o logo.ico https://builds.orbprojectmanagement.com/Images/logo.ico
         shell: bash
 
-      - name: Install Inno Setup
-        run: |
-          curl -L -o is.exe "https://jrsoftware.org/download.php/is.exe"
-          start /wait is.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-
-        shell: cmd
-
-      - name: Verify Inno Setup installation
-        run: |
-          where iscc
-          if not exist "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" exit 1
-        shell: cmd
-
-      - name: Check if setup.iss exists and readable
-        run: |
-          dir setup.iss
-          type setup.iss
-        shell: cmd
+      - name: Install Inno Setup (choco)
+        run: choco install innosetup -y
+        shell: powershell
 
       - name: Compile Setup with Inno Setup
         run: |
-          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /DAppVersion=${{ env.VERSION }} "setup.iss"
-        shell: cmd
+          $iscc = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) { throw "ISCC non trouvé à $iscc" }
+          & $iscc /DAppVersion=${{ env.VERSION }} "setup.iss"
+        shell: powershell
 
       - name: Upload Installer as Artifact
         uses: actions/upload-artifact@v4
