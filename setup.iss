@@ -2,7 +2,7 @@
 #define AppPublisher "Orb Project Management, SAS"
 #define MyAppURL "https://orbprojectmanagement.com"
 #define AppExeName "OrbBrainstorming.exe"
-#define AppSourceDir "OrbBrainstorming"
+#define AppSourceDir "OrbProject"
 
 [Setup]
 AppId={{369F2C6A-D016-4DA1-B76A-D73FF049BA1C}}
